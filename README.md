@@ -1,4 +1,4 @@
-# Plataforma Social
+# FortGuesser
 
 Conceito e desenvolvimento ainda em processos iniciais.
 
