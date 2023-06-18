@@ -19,7 +19,6 @@ public class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
-    @JsonIgnore
     private UUID id;
 
     @Column(nullable = false, unique = true, name = "nickname")
@@ -36,18 +35,14 @@ public class Pessoa {
 
     @ManyToOne
     @JoinColumn(name = "autoridade_id")
-    @JsonIgnore
     private Autoridade autoridade;
 
     @Column(nullable = false, unique = true, name = "created_at")
-    @JsonIgnore
     private OffsetDateTime createdAt;
 
     @Column(nullable = false, unique = true, name = "modified_at")
-    @JsonIgnore
     private OffsetDateTime modifiedAt;
 
     @Column(nullable = false, name = "ativo")
-    @JsonIgnore
     private boolean ativo;
 }

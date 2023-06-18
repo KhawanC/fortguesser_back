@@ -35,7 +35,7 @@ public class SecurityConfig {
     private SecurityAuthFilter authFilter;
 
     private static final String[] DOCUMENTATION = {"/v3/api-docs/**", "/swagger-ui/**", "/docs.html"};
-    private static final String[] OPEN_GET_ENDPOINTS = {"/pessoa"};
+    private static final String[] OPEN_GET_ENDPOINTS = {"/pessoa", "/fortnite/**"};
     private static final String[] OPEN_POST_ENDPOINTS = {"/pessoa", "/auth/login"};
 
     @Bean
@@ -58,7 +58,7 @@ public class SecurityConfig {
             auth.requestMatchers(HttpMethod.GET, OPEN_GET_ENDPOINTS).permitAll();
             auth.requestMatchers(HttpMethod.POST, OPEN_POST_ENDPOINTS).permitAll();
             auth.anyRequest().authenticated();
-        })
+            })
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(context -> context.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

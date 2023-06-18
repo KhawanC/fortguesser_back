@@ -15,7 +15,8 @@ import java.time.OffsetDateTime;
 public class Autoridade {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(initialValue = 0, name = "autoridade_seq", sequenceName = "autoridade_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "autoridade_seq")
     @Column(nullable = false)
     private Long id;
 

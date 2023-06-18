@@ -33,7 +33,7 @@ public class PessoaController {
         return new ResponseEntity<>(mapper.map(pessoaService.buscarPorEmailOrId(id, email), PessoaDto.class), HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping("/salvar")
     @Operation(summary = "Registrar pessoa")
     public ResponseEntity<PessoaDto> salvarPessoa(@RequestBody Pessoa pessoa, HttpServletResponse response, UriComponentsBuilder uriBuilder) {
         PessoaDto pessoaDto = mapper.map(pessoaService.salvar(pessoa), PessoaDto.class);
