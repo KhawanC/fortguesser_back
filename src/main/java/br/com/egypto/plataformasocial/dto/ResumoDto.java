@@ -22,7 +22,7 @@ public class ResumoDto {
 
     private Long questoesErros;
 
-    private Long streakVitorias;
+    private Long streakVitoria;
 
     private UUID pessoaId;
 }

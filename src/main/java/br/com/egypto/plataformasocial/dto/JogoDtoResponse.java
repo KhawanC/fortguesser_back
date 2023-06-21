@@ -1,7 +1,5 @@
 package br.com.egypto.plataformasocial.dto;
 
-import br.com.egypto.plataformasocial.entity.Dificuldade;
-import br.com.egypto.plataformasocial.entity.JogoCategoria;
 import lombok.*;
 
 @Builder

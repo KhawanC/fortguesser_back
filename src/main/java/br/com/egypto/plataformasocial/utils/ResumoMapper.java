@@ -3,23 +3,21 @@ package br.com.egypto.plataformasocial.utils;
 import br.com.egypto.plataformasocial.dto.ResumoDto;
 import br.com.egypto.plataformasocial.entity.Pessoa;
 import br.com.egypto.plataformasocial.entity.Resumo;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import static java.util.Objects.*;
 
 @Component
 public class ResumoMapper {
 
-    @Autowired
-    ModelMapper mapper;
-
     public ResumoDto toResumoDto(Resumo entity) {
-        ResumoDto resumoDto = mapper.map(entity, ResumoDto.class);
-        if (nonNull(entity.getPessoa()))
-            resumoDto.setPessoaId(entity.getPessoa().getId());
-        return  resumoDto;
+        return ResumoDto.builder()
+                .id(entity.getId())
+                .jogosTotais(entity.getJogosTotais())
+                .jogosGanhos(entity.getJogosGanhos())
+                .jogosPerdidos(entity.getJogosPerdidos())
+                .questoesErros(entity.getQuestoesErros())
+                .streakVitoria(entity.getStreakVitoria())
+                .pessoaId(entity.getPessoa().getId())
+                .build();
     }
 
     public Resumo toResumo(ResumoDto dto) {
@@ -28,7 +26,7 @@ public class ResumoMapper {
                 .jogosPerdidos(dto.getJogosPerdidos())
                 .jogosGanhos(dto.getJogosGanhos())
                 .jogosTotais(dto.getJogosTotais())
-                .streakVitorias(dto.getStreakVitorias())
+                .streakVitoria(dto.getStreakVitoria())
                 .questoesErros(dto.getQuestoesErros())
                 .pessoa(Pessoa.builder()
                         .id(dto.getPessoaId())

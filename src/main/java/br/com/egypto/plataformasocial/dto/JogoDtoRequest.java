@@ -1,7 +1,5 @@
 package br.com.egypto.plataformasocial.dto;
 
-import br.com.egypto.plataformasocial.entity.Dificuldade;
-import br.com.egypto.plataformasocial.entity.JogoCategoria;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,9 +19,9 @@ public class JogoDtoRequest {
 
     private boolean ativo;
 
-    private JogoCategoria categoria;
+    private JogoCategoriaDto categoria;
 
-    private Dificuldade dificuldade;
+    private DificuldadeDto dificuldade;
 
     private MultipartFile icone;
 }

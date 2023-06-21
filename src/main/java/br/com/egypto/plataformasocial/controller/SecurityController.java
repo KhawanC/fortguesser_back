@@ -1,11 +1,12 @@
 package br.com.egypto.plataformasocial.controller;
 
 import br.com.egypto.plataformasocial.dto.LoginRequest;
-import br.com.egypto.plataformasocial.entity.Pessoa;
+import br.com.egypto.plataformasocial.dto.PessoaDto;
 import br.com.egypto.plataformasocial.security.JwtResponse;
 import br.com.egypto.plataformasocial.security.JwtService;
+import br.com.egypto.plataformasocial.security.PessoaDetails;
+import br.com.egypto.plataformasocial.utils.PessoaMapper;
 import io.swagger.v3.oas.annotations.Operation;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
@@ -28,7 +29,7 @@ public class SecurityController {
     AuthenticationManager manager;
 
     @Autowired
-    ModelMapper mapper;
+    PessoaMapper mapper;
 
     @PostMapping("/login")
     @Operation(summary = "Login")
@@ -36,7 +37,7 @@ public class SecurityController {
         var authToken = new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getSenha());
         Authentication authentication = manager.authenticate(authToken);
         return JwtResponse.builder()
-                .token(jwtService.gerarToken(mapper.map(authentication.getPrincipal(), Pessoa.class)))
+                .token(jwtService.gerarToken(mapper.toPessoa((PessoaDetails) authentication.getPrincipal())))
                 .build();
     }
 }

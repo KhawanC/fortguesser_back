@@ -32,8 +32,8 @@ public class Resumo {
     @Column(nullable = false, name = "questoes_erros")
     private Long questoesErros;
 
-    @Column(nullable = false, name = "streak_vitorias")
-    private Long streakVitorias;
+    @Column(nullable = false, name = "streak_vitoria")
+    private Long streakVitoria;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_id", unique = true)

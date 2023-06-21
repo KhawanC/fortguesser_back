@@ -2,10 +2,9 @@ package br.com.egypto.plataformasocial.controller;
 
 import br.com.egypto.plataformasocial.dto.JogoDtoRequest;
 import br.com.egypto.plataformasocial.dto.JogoDtoResponse;
-import br.com.egypto.plataformasocial.entity.Jogo;
 import br.com.egypto.plataformasocial.service.JogoService;
+import br.com.egypto.plataformasocial.utils.JogoMapper;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,13 +26,13 @@ public class JogoController {
     JogoService jogoService;
 
     @Autowired
-    ModelMapper mapper;
+    JogoMapper mapper;
 
     @GetMapping(value = "/buscarTodos")
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Page<JogoDtoResponse>> buscarTodosJogos(Pageable pageable) {
         Page<JogoDtoResponse> jogoDtoResponses = jogoService.buscarTodos(pageable).map(entity ->
-            mapper.map(entity, JogoDtoResponse.class));
+            mapper.toJogoDtoResponse(entity));
         return new ResponseEntity<>(jogoDtoResponses, HttpStatus.OK);
     }
 
@@ -42,19 +41,19 @@ public class JogoController {
     public ResponseEntity<Page<JogoDtoResponse>> buscarTodosJogosByAtivo(Pageable pageable,
                                                                     @RequestParam(value = "ativo") boolean ativo) {
         Page<JogoDtoResponse> jogoDtoResponses = jogoService.buscarTodosByAtivo(pageable, ativo).map(enity ->
-                mapper.map(enity, JogoDtoResponse.class));
+                mapper.toJogoDtoResponse(enity));
         return new ResponseEntity<>(jogoDtoResponses, HttpStatus.OK);
     }
 
     @PostMapping(value = "/salvar", produces = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<JogoDtoResponse> salvarJogo(JogoDtoRequest jogoDto) throws IOException {
-        return new ResponseEntity<>(mapper.map(jogoService.salvar(jogoDto), JogoDtoResponse.class), HttpStatus.OK);
+    public ResponseEntity<JogoDtoResponse> salvarJogo(JogoDtoRequest jogoDtoRequest) throws IOException {
+        return new ResponseEntity<>(mapper.toJogoDtoResponse(jogoService.salvar(mapper.toJogo(jogoDtoRequest))), HttpStatus.OK);
     }
 
     @PatchMapping(value = "/atualizarImagem", produces = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<Void> atualizarIconeJogo(@RequestPart("image_file")MultipartFile image, @RequestParam(value = "id") Long id) throws IOException {
+    public ResponseEntity<Void> atualizarIconeJogo(@RequestPart("image_file") MultipartFile image, @RequestParam(value = "id") Long id) throws IOException {
         jogoService.atualizarImagem(id, image);
         return new ResponseEntity<>(HttpStatus.OK);
     }

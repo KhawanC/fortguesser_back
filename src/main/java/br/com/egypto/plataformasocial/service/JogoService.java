@@ -52,18 +52,14 @@ public class JogoService {
         return jogo;
     }
 
-    public Jogo salvar(JogoDtoRequest jogoDto) throws IOException {
-        Jogo jogo =  repository.save(Jogo.builder()
-                    .nome(jogoDto.getNome())
-                    .nome(jogoDto.getNome())
-                    .descricao(jogoDto.getDescricao())
-                    .icone(nonNull(jogoDto.getIcone()) ? utils.compressImage(jogoDto.getIcone().getBytes()) : null)
-                    .ativo(jogoDto.isAtivo())
-                    .createdAt(OffsetDateTime.now())
-                    .modifiedAt(OffsetDateTime.now())
-                .build());
-        jogo.setIcone(utils.decompressImage(jogo.getIcone()));
-        return jogo;
+    public Jogo salvar(Jogo jogo) {
+        jogo.setId(null);
+        jogo.setIcone(nonNull(jogo.getIcone()) ? utils.compressImage(jogo.getIcone()) : null);
+        jogo.setCreatedAt(OffsetDateTime.now());
+        jogo.setModifiedAt(OffsetDateTime.now());
+        Jogo jogoSalvo = repository.save(jogo);
+        jogoSalvo.setIcone(utils.decompressImage(jogo.getIcone()));
+        return jogoSalvo;
     }
 
     public void atualizarImagem(Long id, MultipartFile imagem) throws IOException {
