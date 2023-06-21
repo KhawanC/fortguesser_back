@@ -26,7 +26,7 @@ public class PessoaController {
     @Autowired
     ModelMapper mapper;
 
-    @GetMapping()
+    @GetMapping("buscarPorIdOuEmail")
     @Operation(summary = "Buscar pessoa por email ou por id", description = "Passar apenas 1 dos valores")
     public ResponseEntity<PessoaDto> buscarPessoaPorEmailOrId(@RequestParam(name = "email", required = false) String email,
                                                               @RequestParam(name = "id", required = false) String id) {
@@ -41,14 +41,14 @@ public class PessoaController {
         return new ResponseEntity<>(pessoaDto, HttpStatus.CREATED);
     }
 
-    @PutMapping("atualizar-dados-gerais")
+    @PutMapping("atualizarDadosGerais")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Atualizar dados gerais", description = "Dados gerais por enquanto consideramos apenas nick, nome, imagem de perfil, descricao perfil, etc..")
     public ResponseEntity<PessoaDto> atualizarDadosGeraisPessoa(@RequestBody PessoaDto pessoa) {
         return new ResponseEntity<>(mapper.map(pessoaService.atualizarDadosGeraisPessoa(pessoa), PessoaDto.class), HttpStatus.OK);
     }
 
-    @PatchMapping("alterar-senha")
+    @PatchMapping("alterarSenha")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Alterar senha")
     public ResponseEntity<PessoaDto> alterarSenhaPessoa(@RequestParam(name = "email") String email,
@@ -59,7 +59,7 @@ public class PessoaController {
                 .alterarSenhaUsuarioPorEmail(email, senhaAntiga, confirmacaoSenhaAntiga, senhaNova), PessoaDto.class), HttpStatus.OK);
     }
 
-    @PatchMapping("alterar-autoridade")
+    @PatchMapping("alterarAutoridade")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Alterar autoridade")
     public ResponseEntity<PessoaDto> alterarAutoridadePessoa(@RequestParam(name = "email") String email,
@@ -67,7 +67,7 @@ public class PessoaController {
         return new ResponseEntity<>(mapper.map(pessoaService.alterarAutoridadeUsuarioPorEmail(email, autoridade), PessoaDto.class), HttpStatus.OK);
     }
 
-    @PatchMapping("atualizar-status-ativacao")
+    @PatchMapping("atualizarStatusAtivacao")
     @Operation(summary = "Atualizar status de ativação", description = "Esse endpoint troca o status de ativação da conta, bloquenado algumas coisas." +
             "Por exemplo, contas desativas não podem realizar login")
     public ResponseEntity<PessoaDto> atualizarStatusAtivacaoPessoa(@RequestParam(name = "email") String email,

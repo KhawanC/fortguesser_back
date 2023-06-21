@@ -1,6 +1,5 @@
 package br.com.egypto.plataformasocial.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 

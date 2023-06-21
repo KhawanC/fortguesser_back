@@ -31,9 +31,9 @@ public class PessoaService {
     @Autowired
     Utilities utilities;
 
-    public Pessoa buscarPorId(String uuid) {
-        return repository.findById(UUID.fromString(uuid))
-                .orElseThrow(() -> new NoSuchElementException("Pessoa não encontrada com o id " + uuid));
+    public Pessoa buscarPorId(String id) {
+        return repository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new NoSuchElementException("Pessoa não encontrada com o id " + id));
     }
 
     public Pessoa buscarPorEmail(String email) {
